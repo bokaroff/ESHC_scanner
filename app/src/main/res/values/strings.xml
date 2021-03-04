@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ESHC_scanner</string>
+    <string name="hello_splash_fragment">Hello splash fragment</string>
+</resources>

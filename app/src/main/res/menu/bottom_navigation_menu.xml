@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <item
+        android:id="@+id/fragmentHome"
+        android:icon="@drawable/elite_logo"
+        android:title="Другое"
+        android:iconTint="@color/red_dark"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/fragmentView"
+        android:icon="@drawable/elite_logo"
+        android:title="Онлайн"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/fragmentGuard"
+        android:icon="@drawable/elite_logo"
+        android:title="Охранники"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/fragmentGuardLate"
+        android:icon="@drawable/elite_logo"
+        android:title="Опоздавшие"
+        app:showAsAction="ifRoom" />
+
+
+    <item
+        android:id="@+id/fragmentItemRoom"
+        android:icon="@drawable/elite_logo"
+        android:title="Объекты"
+        app:showAsAction="ifRoom" />
+
+</menu>

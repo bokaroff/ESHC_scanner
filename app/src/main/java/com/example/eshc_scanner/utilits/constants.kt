@@ -6,6 +6,7 @@ import com.example.eshc_scanner.room.ItemRoomDao
 import com.example.eshc_scanner.room.ItemRoomDatabase
 import com.example.eshc_scanner.room.RoomRepository
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.firestore.FirebaseFirestore
 
 const val TAG = "ktx"
@@ -48,8 +49,7 @@ lateinit var ITEM: Items
 lateinit var REPOSITORY_ROOM: RoomRepository
 lateinit var ITEM_ROOM_DAO: ItemRoomDao
 lateinit var ITEM_ROOM_DATABASE: ItemRoomDatabase
-lateinit var optionsItems: FirestoreRecyclerOptions<Items>
-
+lateinit var bottomNavigationView: BottomNavigationView
 
 
 

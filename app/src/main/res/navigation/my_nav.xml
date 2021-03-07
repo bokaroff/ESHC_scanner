@@ -7,6 +7,23 @@
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.example.eshc_scanner.SplashFragment"
-        android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" />
+        android:label="@string/set_your_object"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_objectSetUpFragment"
+            app:destination="@id/objectSetUpFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/objectSetUpFragment"
+        android:name="com.example.eshc_scanner.screens.ObjectSetUpFragment"
+        android:label="@string/set_call_time" >
+        <action
+            android:id="@+id/action_objectSetUpFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </dialog>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.eshc_scanner.screens.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" />
 </navigation>

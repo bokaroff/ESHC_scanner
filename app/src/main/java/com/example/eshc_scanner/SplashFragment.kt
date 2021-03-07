@@ -36,10 +36,6 @@ class SplashFragment : Fragment() {
     private lateinit var adapterItem: AdapterItems
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mToolbar: Toolbar
-    private lateinit var mKey: String
-    private lateinit var mViewHolder: RecyclerView.ViewHolder
-    private lateinit var deleteIcon: Drawable
-    private var swipeBackground = ColorDrawable(Color.RED)
 
 
     override fun onCreateView(
@@ -48,25 +44,9 @@ class SplashFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentSplashBinding.inflate(layoutInflater, container, false)
+        bottomNavigationView.visibility = View.GONE
         return mBinding.root
     }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-       // getData()
-    }
-
-    private fun getData() {
-        val query = collectionITEMS_REF
-            .orderBy("objectName", Query.Direction.ASCENDING)
-        optionsItems = FirestoreRecyclerOptions.Builder<Items>()
-            .setQuery(query, Items::class.java)
-            .build()
-      //  adapterFireItem = FireItemAdapter(optionsItems)
-    }
-
-
-
 
     override fun onStart() {
         super.onStart()
@@ -82,30 +62,6 @@ class SplashFragment : Fragment() {
         adapterItem = AdapterItems()
         mRecyclerView.adapter = adapterItem
     }
-
-/*
-    private fun getMainItemsList() {
-        //   val itemsList = mutableListOf<Items>()
-
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val itemsList = REPOSITORY_ROOM.getMainItemList()
-                Log.d(TAG, "from saved data splashFragment: + ${itemsList.size}")
-
-                withContext(Dispatchers.Main){
-                        adapterItem.setList(itemsList)
-                }
-
-            } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    e.message?.let { showToast(it) }
-                }
-            }
-        }
-    }
-
- */
-
 
     private fun getMainItemsList() {
         val itemsList = mutableListOf<Items>()
@@ -132,7 +88,7 @@ class SplashFragment : Fragment() {
                         adapterItem.setList(itemsList)
                     }
 
-                    Log.d(TAG, "from NOT saved data: + ${itemsList.size} + ")
+                    Log.d(TAG, "new loaded data: + ${itemsList.size} + ")
                 } else {
                     withContext(Dispatchers.Main){
                         adapterItem.setList(itemsData)
@@ -159,7 +115,12 @@ class SplashFragment : Fragment() {
         fun companionClick(item: Items) {
             val bundle = Bundle()
             bundle.putSerializable("item", item)
-        showToast(item.objectName)
+
+            APP_ACTIVITY.navController.navigate(R.id.action_splashFragment_to_objectSetUpFragment, bundle)
+
+
+
+//        showToast(item.objectName)
         }
     }
 }

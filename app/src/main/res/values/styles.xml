@@ -52,6 +52,40 @@
         <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
     </style>
 
+    <!-- checkboxStyle -->
+    <style name="checkbox">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/margin_small</item>
+        <item name="android:elevation">@dimen/margin_main</item>
+        <item name="android:layout_margin">@dimen/margin_main</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:background">@drawable/custom_checkbox</item>
+        <item name="android:button">@android:color/transparent</item>
+    </style>
+
+    <!-- ButtonStyle -->
+    <style name="button_blue_save">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/margin_10</item>
+        <item name="android:background">@drawable/custom_button_save</item>
+        <item name="android:elevation">@dimen/margin_main</item>
+        <item name="android:text">@string/menu_save</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+
+    <!-- TextViewStyle -->
+    <style name="textView_large">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/et_height</item>
+        <item name="android:layout_margin">@dimen/margin_main</item>
+        <item name="android:textSize">@dimen/text_size_18</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:gravity">center</item>
+    </style>
 
 
 </resources>

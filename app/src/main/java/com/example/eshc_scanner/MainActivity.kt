@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var destinationChangedListener:
             NavController.OnDestinationChangedListener
 
-    private lateinit var bottomNavigationView: BottomNavigationView
     lateinit var navController: NavController
 
     private var _binding: ActivityMainBinding? = null
@@ -56,15 +55,15 @@ class MainActivity : AppCompatActivity() {
         ITEM_ROOM_DATABASE = ItemRoomDatabase.getInstance(this)
         ITEM_ROOM_DAO = ITEM_ROOM_DATABASE.getItemRoomDao()
         REPOSITORY_ROOM = RoomRepository(ITEM_ROOM_DAO)
+        bottomNavigationView = mBinding.bottomNavigationView
+        bottomNavigationView.itemIconTintList = null
     }
 
     private fun setUpNavController() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.navHostFragment) as NavHostFragment
         navController = navHostFragment.navController
-        bottomNavigationView = mBinding.bottomNavigationView
         bottomNavigationView.setupWithNavController(navController)
-        bottomNavigationView.itemIconTintList = null
 
         setOnNavigationItemSelectedListener()
         setOnDestinationChangedListener()

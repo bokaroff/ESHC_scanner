@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.eshc_scanner.screens.ObjectSetUpFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/fragmentObjectSetUp_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:title="@string/set_call_time"
+        style="@style/toolBar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@color/colorWhite" />
+
+    <TextView
+        android:id="@+id/fragmentObjectSetUp_textView"
+        style="@style/textView_large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentObjectSetUp_toolbar"
+        />
+
+
+    <CheckBox
+        android:id="@+id/fragmentObjectSetUp_field00"
+        style="@style/checkbox"
+        android:autofillHints=""
+        android:text="@string/_00_00"
+        app:layout_constraintEnd_toStartOf="@+id/fragmentObjectSetUp_field04"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentObjectSetUp_textView" />
+
+    <CheckBox
+        android:id="@+id/fragmentObjectSetUp_field02"
+        style="@style/checkbox"
+        android:autofillHints=""
+        android:text="@string/_02_00"
+        app:layout_constraintEnd_toStartOf="@+id/fragmentObjectSetUp_field06"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentObjectSetUp_field00"
+        />
+
+    <CheckBox
+        android:id="@+id/fragmentObjectSetUp_field04"
+        style="@style/checkbox"
+        android:layout_marginTop="140dp"
+        android:autofillHints=""
+        android:text="@string/_04_00"
+        app:layout_constraintEnd_toEndOf="@+id/fragmentObjectSetUp_field06"
+        app:layout_constraintStart_toStartOf="@+id/fragmentObjectSetUp_field02"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentObjectSetUp_textView" />
+
+    <CheckBox
+        android:id="@+id/fragmentObjectSetUp_field06"
+        style="@style/checkbox"
+        android:autofillHints=""
+        android:text="@string/_06_00"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentObjectSetUp_field00" />
+
+    <CheckBox
+        android:id="@+id/fragmentObjectSetUp_field08"
+        style="@style/checkbox"
+        android:layout_marginTop="8dp"
+        android:autofillHints=""
+        android:text="@string/_08_00"
+        app:layout_constraintEnd_toEndOf="@+id/fragmentObjectSetUp_field15"
+        app:layout_constraintStart_toStartOf="@+id/fragmentObjectSetUp_field06"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentObjectSetUp_textView" />
+
+    <CheckBox
+        android:id="@+id/fragmentObjectSetUp_field15"
+        style="@style/checkbox"
+        android:autofillHints=""
+        android:text="@string/_15_00"
+        app:layout_constraintStart_toEndOf="@+id/fragmentObjectSetUp_field06"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentObjectSetUp_field00" />
+
+    <CheckBox
+        android:id="@+id/fragmentObjectSetUp_field21"
+        style="@style/checkbox"
+        android:autofillHints=""
+        android:text="@string/_21_00"
+        app:layout_constraintStart_toEndOf="@+id/fragmentObjectSetUp_field08"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentObjectSetUp_textView"
+        />
+
+    <Button
+        android:id="@+id/fragmentObjectSetUp_button"
+        style="@style/button_blue_save"
+        app:backgroundTint ="@null"
+        android:foreground="?attr/selectableItemBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentObjectSetUp_field06"
+
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,7 +12,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         style="@style/toolBar"
-        app:titleTextColor="@color/colorWhite" />
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/set_your_object"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_size_18"
+            android:textStyle="bold"
+            android:gravity = "center"
+            android:id="@+id/toolbar_title" />
+
+
+    </androidx.appcompat.widget.Toolbar>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvFragmentView"

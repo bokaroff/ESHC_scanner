@@ -1,5 +1,6 @@
 package com.example.eshc_scanner.screens
 
+/*
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -130,7 +131,7 @@ class ObjectSetUpFragment : BottomSheetDialogFragment() {
                         bundle.putSerializable("item", item)
 
                         withContext(Dispatchers.Main) {
-                            APP_ACTIVITY.navController.navigate(R.id.action_objectSetUpFragment_to_mainFragment, bundle)
+                          //  APP_ACTIVITY.navController.navigate(R.id.action_objectSetUpFragment_to_mainFragment, bundle)
                             showToast("Объект ${item.objectName} сохранен")
                         }
                     } catch (e: Exception) {
@@ -150,3 +151,5 @@ class ObjectSetUpFragment : BottomSheetDialogFragment() {
 
 
 }
+
+ */

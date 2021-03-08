@@ -1,25 +1,21 @@
 package com.example.eshc_scanner
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.eshc_scanner.adapters.AdapterItems
-import com.example.eshc_scanner.adapters.FireItemAdapter
 import com.example.eshc_scanner.databinding.FragmentSplashBinding
 import com.example.eshc_scanner.model.Items
 import com.example.eshc_scanner.utilits.*
-import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -52,6 +48,7 @@ class SplashFragment : Fragment() {
         super.onStart()
         initialise()
         getMainItemsList()
+    //    getItem()
         Log.d(TAG, "start: $javaClass")
     }
 
@@ -84,13 +81,39 @@ class SplashFragment : Fragment() {
 
                     REPOSITORY_ROOM.insertItemList(itemsList)
 
-                    withContext(Dispatchers.Main){
-                        adapterItem.setList(itemsList)
+                   val item = REPOSITORY_ROOM.getSelectedItem()
+                    Log.d(TAG, "mainItem: + ${item.size} + ")
+                    if(item.isNotEmpty()){
+                        withContext(Dispatchers.Main) {
+                           APP_ACTIVITY.navController.navigate(R.id.action_splashFragment_to_mainFragment)
+                        }
                     }
 
-                    Log.d(TAG, "new loaded data: + ${itemsList.size} + ")
+
+                    withContext(Dispatchers.Main) {
+                        adapterItem.setList(itemsList)
+                        Log.d(TAG, "new loaded data: + ${itemsList.size} + ")
+                    }
+
+
+
+
                 } else {
-                    withContext(Dispatchers.Main){
+
+
+
+                    val item = REPOSITORY_ROOM.getSelectedItem()
+                    Log.d(TAG, "mainItem: + ${item.size} + ")
+                    if(item.isNotEmpty()){
+                        withContext(Dispatchers.Main) {
+                            APP_ACTIVITY.navController.navigate(R.id.action_splashFragment_to_mainFragment)
+                        }
+                    }
+
+
+
+
+                    withContext(Dispatchers.Main) {
                         adapterItem.setList(itemsData)
                         Log.d(TAG, "from saved data: + ${itemsData.size}")
                     }
@@ -103,6 +126,12 @@ class SplashFragment : Fragment() {
         }
     }
 
+    private fun getItem() {
+
+
+
+
+    }
 
 
     override fun onDestroyView() {
@@ -113,14 +142,41 @@ class SplashFragment : Fragment() {
 
     companion object {
         fun companionClick(item: Items) {
-            val bundle = Bundle()
-            bundle.putSerializable("item", item)
 
-            APP_ACTIVITY.navController.navigate(R.id.action_splashFragment_to_objectSetUpFragment, bundle)
+            val builder = AlertDialog.Builder(APP_ACTIVITY)
 
+            builder.apply {
+                setMessage("Что ваш объект ${item.objectName} ")
+                setTitle("Вы уверены?")
+                setPositiveButton("Да") { dialogInterface: DialogInterface, i: Int ->
 
+                    CoroutineScope(Dispatchers.IO).launch {
+                        try {
+                            item.state = stateChanged
+                            REPOSITORY_ROOM.insertItem(item)
 
-//        showToast(item.objectName)
+                            val bundle = Bundle()
+                            bundle.putSerializable("item", item)
+
+                            withContext(Dispatchers.Main) {
+                                APP_ACTIVITY.navController.navigate(
+                                    R.id.action_splashFragment_to_mainFragment,
+                                    bundle
+                                )
+                                showToast("Объект ${item.objectName} сохранен")
+                            }
+                        } catch (e: Exception) {
+                            withContext(Dispatchers.Main) {
+                                e.message?.let { showToast(it) }
+                            }
+                        }
+                    }
+                }
+                setNegativeButton("Нет") {_, _ ->
+                }
+            }
+            val dialog = builder.create()
+            dialog.show()
         }
     }
 }

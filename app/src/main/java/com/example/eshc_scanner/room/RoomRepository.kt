@@ -12,8 +12,8 @@ class RoomRepository(private val itemRoomDao: ItemRoomDao) {
 
 
 
-  suspend  fun singleChangedItem(name: String): List<Items>{
-        return itemRoomDao.singleChangedItem(name)
+  suspend  fun getSelectedItem (): List<Items>{
+        return itemRoomDao.getSelectedItem()
     }
 
     suspend fun getMainItemList(): List<Items> {

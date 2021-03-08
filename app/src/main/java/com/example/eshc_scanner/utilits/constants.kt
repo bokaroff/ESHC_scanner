@@ -12,8 +12,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 const val TAG = "ktx"
 const val getAllMainItems = "SELECT * FROM items_table WHERE state = 'main'"
 const val getAllChangedItems = "SELECT * FROM items_table WHERE state = 'changed'"
-const val singleChangedItem =
-    "SELECT * FROM items_table WHERE state = 'changed' and objectName =:name"
+const val changedItem =
+    "SELECT * FROM items_table WHERE state = 'changed'"
 const val getAllChangedItemsWhereTimeBetween =
     "SELECT * FROM items_table WHERE state = 'changed'and itemLongTime BETWEEN :timeStart and :timeEnd"
 

@@ -16,13 +16,15 @@
             app:popUpTo="@id/my_nav"
             app:popUpToInclusive="true" />
     </fragment>
-    <dialog
-        android:id="@+id/objectSetUpFragment"
-        android:name="com.example.eshc_scanner.screens.ObjectSetUpFragment"
-        android:label="@string/set_call_time" />
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.eshc_scanner.screens.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_splashFragment"
+            app:destination="@id/splashFragment"
+            app:popUpTo="@id/my_nav"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

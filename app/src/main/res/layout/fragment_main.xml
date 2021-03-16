@@ -15,16 +15,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextColor="@color/colorWhite">
 
-
-        <TextView
-            android:id="@+id/mainFragmentToolbarTitle"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/text_size_18"
-            android:textStyle="bold" />
-
     </androidx.appcompat.widget.Toolbar>
 
 

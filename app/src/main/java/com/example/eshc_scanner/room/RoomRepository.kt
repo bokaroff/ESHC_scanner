@@ -9,11 +9,12 @@ class RoomRepository(private val itemRoomDao: ItemRoomDao) {
     val allChangedItems: LiveData<List<Items>>
         get() = itemRoomDao.getAllChangedItems()
 
+    val getSelectedItem: LiveData<List<Items>>
+        get() = itemRoomDao.getSelectedItem()
 
 
-
-  suspend  fun getSelectedItem (): List<Items>{
-        return itemRoomDao.getSelectedItem()
+    suspend  fun getItem (): List<Items>{
+        return itemRoomDao.getItem()
     }
 
     suspend fun getMainItemList(): List<Items> {
@@ -73,10 +74,16 @@ class RoomRepository(private val itemRoomDao: ItemRoomDao) {
     }
 
 
-
+    suspend fun deleteSelectedItem(){
+        itemRoomDao.deleteSelectedItem()
+    }
 
     suspend fun deleteMainItem(item_id: String){
         itemRoomDao.deleteMainItem(item_id)
+    }
+
+    suspend fun updateMainItem(item: Items){
+        itemRoomDao.updateMainItem(item)
     }
 }
 

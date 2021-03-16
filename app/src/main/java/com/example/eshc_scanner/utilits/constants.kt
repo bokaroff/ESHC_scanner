@@ -12,8 +12,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 const val TAG = "ktx"
 const val getAllMainItems = "SELECT * FROM items_table WHERE state = 'main'"
 const val getAllChangedItems = "SELECT * FROM items_table WHERE state = 'changed'"
-const val changedItem =
-    "SELECT * FROM items_table WHERE state = 'changed'"
+const val getSelectedItem =
+    "SELECT * FROM items_table WHERE state = 'selected'"
+const val deleteSelectedItem =
+"DELETE FROM items_table WHERE state = 'selected'"
+
 const val getAllChangedItemsWhereTimeBetween =
     "SELECT * FROM items_table WHERE state = 'changed'and itemLongTime BETWEEN :timeStart and :timeEnd"
 
@@ -31,7 +34,7 @@ const val getMainItemList15 =
     "SELECT * FROM items_table WHERE order15 = 'true' AND state = 'main' ORDER BY objectName Asc"
 const val getMainItemList21 =
     "SELECT * FROM items_table WHERE order21 = 'true' AND state = 'main' ORDER BY objectName Asc"
-const val stateChanged = "changed"
+const val stateSelected = "selected"
 const val stateMain = "main"
 const val stateLate = "late"
 const val state = "state"
@@ -50,6 +53,7 @@ lateinit var REPOSITORY_ROOM: RoomRepository
 lateinit var ITEM_ROOM_DAO: ItemRoomDao
 lateinit var ITEM_ROOM_DATABASE: ItemRoomDatabase
 lateinit var bottomNavigationView: BottomNavigationView
+lateinit var optionsItems: FirestoreRecyclerOptions<Items>
 
 
 

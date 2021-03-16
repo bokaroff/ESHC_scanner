@@ -15,8 +15,12 @@ interface ItemRoomDao {
  @Query(getAllChangedItems)
  fun getAllChangedItems(): LiveData<List<Items>>
 
- @Query(changedItem)
- suspend fun getSelectedItem(): List<Items>
+ @Query(getSelectedItem)
+ fun getSelectedItem(): LiveData<List<Items>>
+
+ @Query(getSelectedItem)
+ suspend fun getItem(): List<Items>
+
 
  @Query(getAllChangedItemsWhereTimeBetween)
  suspend fun getAllChangedItemsWhereTimeBetween(timeStart: Long, timeEnd: Long): List<Items>
@@ -63,6 +67,9 @@ interface ItemRoomDao {
 
  @Query("DELETE FROM items_table WHERE item_id =:item_id and state = 'main' ")
  suspend fun deleteMainItem(item_id: String)
+
+ @Query(deleteSelectedItem)
+ suspend fun deleteSelectedItem()
 
 
 

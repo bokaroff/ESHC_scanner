@@ -15,6 +15,7 @@
     <string name="set_call_time">Выберите время доклада</string>
     <string name="set_your_object">Выберите ваш объект</string>
     <string name="choose_another_object">Выбрать другой объект</string>
+    <string name="send">Отправить</string>
 
 
 </resources>

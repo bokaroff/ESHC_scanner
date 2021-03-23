@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.eshc_scanner">
 
+    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
+
+    <uses-permission android:name="android.permission.CAMERA"/>
+
     <application
         android:requestLegacyExternalStorage="true"
         android:icon="@drawable/ic_elite_logo"
@@ -10,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/splashTheme"
-        tools:ignore="AllowBackup">
+        tools:ignore="AllowBackup"
+        android:hardwareAccelerated="true"
+        >
 
         <activity android:name=".MainActivity"
             android:screenOrientation="portrait"
@@ -22,6 +28,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="fullSensor"
+            tools:replace="screenOrientation" />
 
     </application>
 

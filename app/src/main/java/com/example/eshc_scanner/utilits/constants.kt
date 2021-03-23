@@ -10,6 +10,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.firestore.FirebaseFirestore
 
 const val TAG = "ktx"
+const val CAMERA_REQUEST_CODE = 101
 const val getAllMainItems = "SELECT * FROM items_table WHERE state = 'main'"
 const val getAllChangedItems = "SELECT * FROM items_table WHERE state = 'changed'"
 const val getSelectedItem =

@@ -1,11 +1,16 @@
 package com.example.eshc_scanner
 
+import android.content.DialogInterface
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -37,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     val mBinding get() = _binding!!
 
 
-    @RequiresApi(Build.VERSION_CODES.M)
+     // @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.AppTheme)
@@ -46,6 +51,8 @@ class MainActivity : AppCompatActivity() {
 
         initialise()
         setUpNavController()
+        checkForPermissions(android.Manifest.permission.CAMERA, "камеру", CAMERA_REQUEST_CODE)
+
     }
 
     private fun initialise() {
@@ -106,7 +113,61 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
+    private fun checkForPermissions(permission: String, name: String, requestCode: Int) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            when {
+                ContextCompat.checkSelfPermission(
+                    applicationContext,
+                    permission
+                ) == PackageManager.PERMISSION_GRANTED -> {
+                    // showToast("Разрешение на $name получено")
+                }
+                shouldShowRequestPermissionRationale(permission) -> showDialog(
+                    permission,
+                    name,
+                    requestCode
+                )
 
+                else -> ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        fun innerCheck(name: String) {
+            if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                showToast("Отказано в разрешении на $name")
+            } else {
+                showToast("Разрешение на $name получено")
+            }
+        }
+
+        when (requestCode) {
+            CAMERA_REQUEST_CODE -> innerCheck("использование камеры")
+        }
+    }
+
+    private fun showDialog(permission: String, name: String, requestCode: Int) {
+        val builder = AlertDialog.Builder(this)
+
+        builder.apply {
+            setMessage("Необходимо разрешение на $name для использования этого приложения")
+            setTitle("Необходимо разрешение!")
+            setPositiveButton("Да") { dialogInterface: DialogInterface, i: Int ->
+                ActivityCompat.requestPermissions(
+                    this@MainActivity,
+                    arrayOf(permission),
+                    requestCode
+                )
+            }
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
 
     override fun onResume() {
         super.onResume()
@@ -125,7 +186,6 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-       Log.d(TAG, " $localClassName stop: ")
+        Log.d(TAG, " $localClassName stop: ")
     }
-
 }

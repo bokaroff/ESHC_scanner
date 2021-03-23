@@ -35,13 +35,6 @@ class SplashFragment : Fragment() {
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mToolbar: Toolbar
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-      //  getData()
-        Log.d(TAG, "create: $javaClass")
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -66,25 +59,17 @@ class SplashFragment : Fragment() {
                         }
                     }
                 }
-
-
-
             }catch (e:Exception){
                 withContext(Dispatchers.Main){
                     e.message?.let { showToast(it) }
                 }
             }
         }
-
-
-
-
     }
 
     override fun onStart() {
         super.onStart()
         initialise()
-
         getData()
         Log.d(TAG, "start: $javaClass")
     }
@@ -101,7 +86,6 @@ class SplashFragment : Fragment() {
             .build()
 
         adapterFireItem = FireItemAdapter(optionsItems)
-
         mRecyclerView.adapter = adapterFireItem
         adapterFireItem.startListening()
     }
@@ -133,7 +117,6 @@ class SplashFragment : Fragment() {
                             Log.d(TAG, "Splash: + ${item.entity_id} + ${item.state}")
                             item.state = stateSelected
 
-                         //   REPOSITORY_ROOM.updateMainItem(item)
                             REPOSITORY_ROOM.insertItem(item)
 
                             val bundle = Bundle()

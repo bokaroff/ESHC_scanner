@@ -47,6 +47,7 @@
     <Button
         android:id="@+id/btnSend"
         style="@style/button_blue_save"
+        android:enabled="false"
         android:text="@string/send"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"

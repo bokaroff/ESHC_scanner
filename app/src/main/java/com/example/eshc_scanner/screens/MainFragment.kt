@@ -42,12 +42,17 @@ class MainFragment : androidx.fragment.app.Fragment() {
 
         tvName = mBinding.mainFragmentTextViewName
         tvTime = mBinding.mainFragmentTextViewTime
+        btnSend = mBinding.btnSend
 
         setHasOptionsMenu(true)
 
         val list = arguments?.getStringArrayList("data")
         tvName.text = list?.get(0) ?: ""
         tvTime.text = list?.get(1) ?: ""
+
+        if(tvName.text.isNotEmpty()){
+            btnSend.isEnabled = true
+        }
 
         return mBinding.root
     }
@@ -61,7 +66,6 @@ class MainFragment : androidx.fragment.app.Fragment() {
 
     private fun initialise() {
         mToolbar = mBinding.mainFragmentToolbar
-        btnSend = mBinding.btnSend
         btnQR = mBinding.btnQR
         APP_ACTIVITY.setSupportActionBar(mToolbar)
         bottomNavigationView.visibility = View.VISIBLE

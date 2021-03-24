@@ -13,6 +13,7 @@ const val TAG = "ktx"
 const val CAMERA_REQUEST_CODE = 101
 const val getAllMainItems = "SELECT * FROM items_table WHERE state = 'main'"
 const val getAllChangedItems = "SELECT * FROM items_table WHERE state = 'changed'"
+
 const val getSelectedItem =
     "SELECT * FROM items_table WHERE state = 'selected'"
 const val deleteSelectedItem =
@@ -40,23 +41,12 @@ const val stateMain = "main"
 const val stateLate = "late"
 const val state = "state"
 
-
-
-
-
-
-
-
 lateinit var APP_ACTIVITY: MainActivity
-lateinit var DB: FirebaseFirestore
 lateinit var ITEM: Items
 lateinit var REPOSITORY_ROOM: RoomRepository
 lateinit var ITEM_ROOM_DAO: ItemRoomDao
 lateinit var ITEM_ROOM_DATABASE: ItemRoomDatabase
-lateinit var bottomNavigationView: BottomNavigationView
 lateinit var optionsItems: FirestoreRecyclerOptions<Items>
-
-
 
 
 val collectionITEMS_REF = FirebaseFirestore.getInstance()

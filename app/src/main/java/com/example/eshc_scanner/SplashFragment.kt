@@ -41,7 +41,6 @@ class SplashFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentSplashBinding.inflate(layoutInflater, container, false)
-        bottomNavigationView.visibility = View.GONE
         return mBinding.root
     }
 

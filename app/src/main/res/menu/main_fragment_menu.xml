@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
-        android:id="@+id/mainFragmentMenuItem"
-        android:title="@string/choose_another_object"
-        app:showAsAction="never" />
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_edit_24"
+        android:title=""
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/mainFragmentMenuItem"
+                android:icon="@drawable/ic_home_24"
+                android:title="@string/choose_another_object"
+                app:showAsAction="never" />
+
+            <item
+                android:id="@+id/mainFragmentMenuHistory"
+                android:icon="@drawable/ic_history_24"
+                android:title="@string/history"
+                app:showAsAction="never" />
+        </menu>
+    </item>
 
 </menu>

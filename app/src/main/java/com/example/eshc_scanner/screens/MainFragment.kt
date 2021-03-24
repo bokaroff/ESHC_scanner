@@ -68,7 +68,6 @@ class MainFragment : androidx.fragment.app.Fragment() {
         mToolbar = mBinding.mainFragmentToolbar
         btnQR = mBinding.btnQR
         APP_ACTIVITY.setSupportActionBar(mToolbar)
-        bottomNavigationView.visibility = View.VISIBLE
     }
 
 
@@ -112,6 +111,9 @@ class MainFragment : androidx.fragment.app.Fragment() {
                     }
                 }
             }
+            R.id.mainFragmentMenuHistory -> {
+                    APP_ACTIVITY.navController.navigate(R.id.action_mainFragment_to_historyFragment)
+            }
         }
 
         return super.onOptionsItemSelected(menu_item)
@@ -140,7 +142,7 @@ class MainFragment : androidx.fragment.app.Fragment() {
                 val bundle = Bundle()
                     bundle.putStringArrayList("data", dataList)
                 APP_ACTIVITY.navController.navigate(R.id.action_global_mainFragment, bundle)
-                showToast("результат ${result.contents}")
+               // showToast("результат ${result.contents}")
             }
         }else {
             super.onActivityResult(requestCode, resultCode, data)

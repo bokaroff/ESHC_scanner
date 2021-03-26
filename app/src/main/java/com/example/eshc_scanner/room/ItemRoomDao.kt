@@ -75,8 +75,5 @@ interface ItemRoomDao {
 
  @Update
  suspend fun updateMainItem(item: Items)
-
-
-
 }
 

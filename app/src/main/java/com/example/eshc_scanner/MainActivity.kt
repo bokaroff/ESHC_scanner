@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity() {
         builder.apply {
             setMessage("Необходимо разрешение на $name для использования этого приложения")
             setTitle("Необходимо разрешение!")
-            setPositiveButton("Да") { dialogInterface: DialogInterface, i: Int ->
+            setPositiveButton("Да") { _: DialogInterface, _: Int ->
                 ActivityCompat.requestPermissions(
                     this@MainActivity,
                     arrayOf(permission),

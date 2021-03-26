@@ -44,28 +44,6 @@ class SplashFragment : Fragment() {
         return mBinding.root
     }
 
-    private fun getData() {
-
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val itemList = REPOSITORY_ROOM.getItem()
-                Log.d(TAG, "itemList: + ${itemList.size} ")
-
-                if (itemList.isNotEmpty()) {
-                    withContext(Dispatchers.Main) {
-                        if (itemList.isNotEmpty()) {
-                            APP_ACTIVITY.navController.navigate(R.id.action_splashFragment_to_mainFragment)
-                        }
-                    }
-                }
-            }catch (e:Exception){
-                withContext(Dispatchers.Main){
-                    e.message?.let { showToast(it) }
-                }
-            }
-        }
-    }
-
     override fun onStart() {
         super.onStart()
         initialise()
@@ -89,6 +67,26 @@ class SplashFragment : Fragment() {
         adapterFireItem.startListening()
     }
 
+    private fun getData() {
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val itemList = REPOSITORY_ROOM.getItem()
+                Log.d(TAG, "if already item exist: + ${itemList.size} ")
+
+                if (itemList.isNotEmpty()) {
+                    withContext(Dispatchers.Main) {
+                            APP_ACTIVITY.navController.navigate(R.id.action_global_mainFragment)
+                    }
+                }
+            }catch (e:Exception){
+                withContext(Dispatchers.Main){
+                    e.message?.let { showToast(it) }
+                }
+            }
+        }
+    }
+
     override fun onStop() {
         super.onStop()
         adapterFireItem.stopListening()
@@ -109,7 +107,7 @@ class SplashFragment : Fragment() {
             builder.apply {
                 setMessage("Что ваш объект ${item.objectName} ")
                 setTitle("Вы уверены?")
-                setPositiveButton("Да") { dialogInterface: DialogInterface, i: Int ->
+                setPositiveButton("Да") { _: DialogInterface, _: Int ->
 
                     CoroutineScope(Dispatchers.IO).launch {
                         try {
@@ -121,7 +119,7 @@ class SplashFragment : Fragment() {
                             val bundle = Bundle()
                             bundle.putSerializable("item", item)
 
-                            Log.d(TAG, "Splash: + entityID- ${item.entity_id} +state- ${item.state} + name-${item.objectName} + " +
+                            Log.d(TAG, "first time select item: - ${item.entity_id} +state- ${item.state} + name-${item.objectName} + " +
                                     "kurator-${item.kurator} + phone-${item.objectPhone}")
                             withContext(Dispatchers.Main) {
                                 APP_ACTIVITY.navController.navigate(

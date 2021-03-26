@@ -38,7 +38,7 @@ const val getMainItemList21 =
     "SELECT * FROM items_table WHERE order21 = 'true' AND state = 'main' ORDER BY objectName Asc"
 const val stateSelected = "selected"
 const val stateMain = "main"
-const val stateLate = "late"
+const val stateSent = "sent"
 const val state = "state"
 
 lateinit var APP_ACTIVITY: MainActivity

@@ -5,6 +5,9 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.View.TEXT_ALIGNMENT_CENTER
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -16,6 +19,7 @@ import com.example.eshc_scanner.model.Items
 import com.example.eshc_scanner.room.ItemRoomDatabase
 import com.example.eshc_scanner.room.RoomRepository
 import com.example.eshc_scanner.utilits.*
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
 
 
@@ -23,22 +27,32 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var DB: FirebaseFirestore
     lateinit var navController: NavController
+    private lateinit var mSnack: Snackbar
 
     private var _binding: ActivityMainBinding? = null
     private val mBinding get() = _binding!!
 
-
-     // @RequiresApi(Build.VERSION_CODES.M)
+    // @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.AppTheme)
+
+        Log.d(TAG, " Mainactivity OnCreate ")
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
+
+        connectionLiveData = ConnectionLiveData(this)
 
         initialise()
         setUpNavController()
         checkForPermissions(android.Manifest.permission.CAMERA, "камеру", CAMERA_REQUEST_CODE)
+    }
 
+
+    override fun onStart() {
+        super.onStart()
+        Log.d(TAG, " Mainactivity onStart ")
+        checkNetWorkConnection()
     }
 
     private fun initialise() {
@@ -48,6 +62,13 @@ class MainActivity : AppCompatActivity() {
         ITEM_ROOM_DATABASE = ItemRoomDatabase.getInstance(this)
         ITEM_ROOM_DAO = ITEM_ROOM_DATABASE.getItemRoomDao()
         REPOSITORY_ROOM = RoomRepository(ITEM_ROOM_DAO)
+
+        mSnack = Snackbar
+            .make(mBinding.root, "Проверьте наличие интернета", Snackbar.LENGTH_INDEFINITE)
+
+        val view: View = mSnack.view
+        val txt = view.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView
+        txt.textAlignment = TEXT_ALIGNMENT_CENTER
     }
 
     private fun setUpNavController() {
@@ -55,8 +76,6 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.navHostFragment) as NavHostFragment
         navController = navHostFragment.navController
     }
-
-
 
     private fun checkForPermissions(permission: String, name: String, requestCode: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -71,7 +90,6 @@ class MainActivity : AppCompatActivity() {
                     name,
                     requestCode
                 )
-
                 else -> ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
             }
         }
@@ -111,6 +129,16 @@ class MainActivity : AppCompatActivity() {
         }
         val dialog = builder.create()
         dialog.show()
+    }
+
+    private fun checkNetWorkConnection() {
+        connectionLiveData.checkValidNetworks()
+        connectionLiveData.observe(this, { isNetWorkAvailable ->
+            when (isNetWorkAvailable) {
+                false -> mSnack.show()
+                true -> mSnack.dismiss()
+            }
+        })
     }
 
     override fun onDestroy() {

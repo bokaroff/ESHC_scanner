@@ -8,7 +8,5 @@
     <item android:drawable="@drawable/button_save_enabled"
         android:state_pressed="false" /> <!-- pressed -->
 
-
-
 </selector>
 

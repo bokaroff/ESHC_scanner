@@ -13,6 +13,7 @@ import com.example.eshc_scanner.R
 import com.example.eshc_scanner.databinding.FragmentMainBinding
 import com.example.eshc_scanner.model.Items
 import com.example.eshc_scanner.utilits.*
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.SetOptions
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.coroutines.CoroutineScope
@@ -25,7 +26,6 @@ import java.util.*
 
 class MainFragment : androidx.fragment.app.Fragment() {
 
-    //  private var mScanResult: String = ""
     private var _binding: FragmentMainBinding? = null
     private val mBinding get() = _binding!!
     private lateinit var mViewModel: MainFragmentViewModel
@@ -36,6 +36,7 @@ class MainFragment : androidx.fragment.app.Fragment() {
     private lateinit var btnSend: Button
     private lateinit var btnQR: ImageButton
     private lateinit var itemSaved: Items
+    private lateinit var mSnack: Snackbar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +44,7 @@ class MainFragment : androidx.fragment.app.Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentMainBinding.inflate(layoutInflater, container, false)
+        Log.d(TAG, "onCreateView MainFragment")
 
         tvName = mBinding.mainFragmentTextViewName
         tvTime = mBinding.mainFragmentTextViewTime
@@ -55,17 +57,40 @@ class MainFragment : androidx.fragment.app.Fragment() {
         if (tvName.text.isNotEmpty()) {
             btnSend.isEnabled = true
             itemSaved = ITEM
-            btnSend.setOnClickListener { sendData(itemSaved) }
-        }
+            btnSend.setOnClickListener{sendData(itemSaved)}
 
+        }
         return mBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.d(TAG, "onViewCreated MainFragment")
+        mSnack = Snackbar
+            .make(view, "Проверьте наличие интернета", Snackbar.LENGTH_INDEFINITE)
+
+        val v: View = mSnack.view
+        val txt = v.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView
+        txt.textAlignment = View.TEXT_ALIGNMENT_CENTER
+
     }
 
     override fun onStart() {
         super.onStart()
+        Log.d(TAG, "onStart MainFragment")
         initialise()
         getMainItem()
         btnQR.setOnClickListener { initScanner() }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume MainFragment")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d(TAG, "onStop MainFragment")
     }
 
     private fun initialise() {
@@ -147,7 +172,6 @@ class MainFragment : androidx.fragment.app.Fragment() {
     }
 
     private fun sendData(item: Items) {
-
         val stringTime = SimpleDateFormat("HH:mm, dd MMM.yyyy", Locale.getDefault())
             .format(Date())
         val id = item.item_id
@@ -161,16 +185,12 @@ class MainFragment : androidx.fragment.app.Fragment() {
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                //collectionITEMS_REF.document(id)
-                //  .set(item, SetOptions.merge()).await()
                 collectionITEMS_REF.document(id)
                     .update(
                         "worker08", item.worker08,
                         "serverTimeStamp", stringTime
                     ).await()
 
-
-                //  item.state = stateSent
                 REPOSITORY_ROOM.insertItem(item)
 
                 withContext(Dispatchers.Main) {
@@ -189,6 +209,7 @@ class MainFragment : androidx.fragment.app.Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        Log.d(TAG, "onDestroyView MainFragment")
         _binding = null
         mViewModel.selectedItem.removeObserver(mObserveList)
         mToolbar.title = ""

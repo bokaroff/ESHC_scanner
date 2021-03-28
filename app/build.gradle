@@ -99,5 +99,8 @@ dependencies {
     implementation('com.journeyapps:zxing-android-embedded:4.2.0') { transitive = false }
     implementation 'com.google.zxing:core:3.3.3'
 
+    // Local Broadcast Manager
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
+
 
 }

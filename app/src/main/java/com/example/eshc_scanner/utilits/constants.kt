@@ -47,6 +47,7 @@ lateinit var REPOSITORY_ROOM: RoomRepository
 lateinit var ITEM_ROOM_DAO: ItemRoomDao
 lateinit var ITEM_ROOM_DATABASE: ItemRoomDatabase
 lateinit var optionsItems: FirestoreRecyclerOptions<Items>
+lateinit var connectionLiveData: ConnectionLiveData
 
 
 val collectionITEMS_REF = FirebaseFirestore.getInstance()

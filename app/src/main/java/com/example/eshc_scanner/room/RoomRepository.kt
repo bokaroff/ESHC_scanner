@@ -1,20 +1,31 @@
 package com.example.eshc_scanner.room
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.eshc_scanner.model.Items
 
 
 class RoomRepository(private val itemRoomDao: ItemRoomDao) {
 
-    val allChangedItems: LiveData<List<Items>>
+    val savedToRoomItems: LiveData<MutableList<Items>>
+        get() = itemRoomDao.savedToRoomItems()
+
+    val allChangedItems: LiveData<MutableList<Items>>
         get() = itemRoomDao.getAllChangedItems()
 
-    val getSelectedItem: LiveData<List<Items>>
-        get() = itemRoomDao.getSelectedItem()
+
+    suspend fun getItems(): List<Items> {
+        return itemRoomDao.getItems()
+    }
 
 
-    suspend  fun getItem (): List<Items>{
-        return itemRoomDao.getItem()
+    suspend  fun getSelectedItem (): List<Items>{
+        return itemRoomDao.getSelectedItem()
+    }
+
+
+    suspend  fun getSavedToRoomItems (): List<Items>{
+        return itemRoomDao.getSavedToRoomItems()
     }
 
     suspend fun getMainItemList(): List<Items> {

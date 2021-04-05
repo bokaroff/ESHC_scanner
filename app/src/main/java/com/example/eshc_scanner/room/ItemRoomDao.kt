@@ -1,6 +1,7 @@
 package com.example.eshc_scanner.room
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.*
 import com.example.eshc_scanner.model.Items
 import com.example.eshc_scanner.utilits.*
@@ -12,15 +13,19 @@ interface ItemRoomDao {
  @Query(getAllMainItems)
  fun getAllItems(): LiveData<List<Items>>
 
+ @Query(getAllSavedToRoomItems)
+ fun savedToRoomItems(): LiveData<MutableList<Items>>
+
  @Query(getAllChangedItems)
- fun getAllChangedItems(): LiveData<List<Items>>
+ fun getAllChangedItems(): LiveData<MutableList<Items>>
+
+
 
  @Query(getSelectedItem)
- fun getSelectedItem(): LiveData<List<Items>>
+ suspend fun getSelectedItem(): List<Items>
 
- @Query(getSelectedItem)
- suspend fun getItem(): List<Items>
-
+ @Query(getAllSavedToRoomItems)
+ suspend fun getSavedToRoomItems(): List<Items>
 
  @Query(getAllChangedItemsWhereTimeBetween)
  suspend fun getAllChangedItemsWhereTimeBetween(timeStart: Long, timeEnd: Long): List<Items>
@@ -29,6 +34,9 @@ interface ItemRoomDao {
 
 // @Query(getMainItem)
 // suspend fun getMainItemList(): Items
+
+ @Query(getAllItems)
+ suspend fun getItems(): List<Items>
 
  @Query(getAllMainItems)
  suspend fun getMainItemList(): List<Items>
@@ -75,5 +83,6 @@ interface ItemRoomDao {
 
  @Update
  suspend fun updateMainItem(item: Items)
+
 }
 

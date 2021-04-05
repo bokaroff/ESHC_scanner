@@ -1,5 +1,6 @@
 package com.example.eshc_scanner
 
+import android.app.Activity
 import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.os.Build
@@ -8,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.view.View.TEXT_ALIGNMENT_CENTER
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -18,6 +20,7 @@ import com.example.eshc_scanner.databinding.ActivityMainBinding
 import com.example.eshc_scanner.model.Items
 import com.example.eshc_scanner.room.ItemRoomDatabase
 import com.example.eshc_scanner.room.RoomRepository
+import com.example.eshc_scanner.screens.MainFragment
 import com.example.eshc_scanner.utilits.*
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
@@ -100,6 +103,7 @@ class MainActivity : AppCompatActivity() {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         fun innerCheck(name: String) {
             if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 showToast("Отказано в разрешении на $name")
@@ -144,6 +148,6 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-        Log.d(TAG, " $localClassName stop: ")
+        Log.d(TAG, " $localClassName onDestroy")
     }
 }

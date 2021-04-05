@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ESHC_scanner</string>
+    <string name="app_name">ESHC scanner</string>
     <string name="hello_splash_fragment">Hello splash fragment</string>
     <string name="hello_mainFragment">Hello MainFragment</string>
 

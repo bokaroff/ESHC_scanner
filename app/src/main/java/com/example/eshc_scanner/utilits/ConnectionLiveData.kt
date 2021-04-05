@@ -24,7 +24,6 @@ import kotlinx.coroutines.withContext
  */
 class ConnectionLiveData(context: Context) : LiveData<Boolean>() {
 
-
     private lateinit var networkCallback: ConnectivityManager.NetworkCallback
     private val cm = context.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
     val validNetworks: MutableSet<Network> = HashSet()
@@ -57,20 +56,6 @@ class ConnectionLiveData(context: Context) : LiveData<Boolean>() {
             val hasInternetCapability = networkCapabilities?.hasCapability(NET_CAPABILITY_INTERNET)
             Log.d(TAG, "onAvailable: ${network}, $hasInternetCapability")
             if (hasInternetCapability == true) {
-                /*
-                // check if this network actually has internet
-                CoroutineScope(Dispatchers.IO).launch {
-                    val hasInternet = DoesNetworkHaveInternet.execute(network.socketFactory)
-                    if(hasInternet){
-                        withContext(Dispatchers.Main){
-                            Log.d(TAG, "onAvailable: adding network. ${network}")
-                            validNetworks.add(network)
-                            checkValidNetworks()
-                        }
-                    }
-                }
-
-                 */
                 validNetworks.add(network)
             }
             checkValidNetworks()
@@ -85,7 +70,5 @@ class ConnectionLiveData(context: Context) : LiveData<Boolean>() {
             validNetworks.remove(network)
             checkValidNetworks()
         }
-
     }
-
 }

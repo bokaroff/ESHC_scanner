@@ -13,12 +13,12 @@ import com.example.eshc_scanner.SplashFragment
 import com.example.eshc_scanner.databinding.RvItemMiniBinding
 import com.example.eshc_scanner.model.Items
 
-class AdapterItems() : RecyclerView.Adapter<AdapterItems.SimpleViewHolder>() {
+class AdapterItemsSimple() : RecyclerView.Adapter<AdapterItemsSimple.SimpleViewHolder>() {
     private lateinit var mContext: Context
     private var mList = mutableListOf<Items>()
 
-
-    override fun onViewAttachedToWindow(holder: SimpleViewHolder) {
+/*
+    override fun onViewAttachedToWindow(holder: AdapterItems.SimpleViewHolder) {
 
         holder.rvItemContainer.setOnClickListener {
             val item = mList[holder.adapterPosition]
@@ -26,10 +26,14 @@ class AdapterItems() : RecyclerView.Adapter<AdapterItems.SimpleViewHolder>() {
         }
     }
 
+
+
     override fun onViewDetachedFromWindow(holder: SimpleViewHolder) {
-        holder.rvItemContainer.setOnClickListener(null)
+       // holder.rvItemContainer.setOnClickListener(null)
         super.onViewDetachedFromWindow(holder)
     }
+
+ */
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SimpleViewHolder {
         val view = SimpleViewHolder(

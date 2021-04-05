@@ -7,14 +7,13 @@ import android.view.*
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.eshc_scanner.R
 import com.example.eshc_scanner.databinding.FragmentMainBinding
 import com.example.eshc_scanner.model.Items
 import com.example.eshc_scanner.utilits.*
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.firestore.SetOptions
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -26,17 +25,29 @@ import java.util.*
 
 class MainFragment : androidx.fragment.app.Fragment() {
 
+    private var timeStart02: Calendar = Calendar.getInstance(Locale.getDefault())
+    private var timeEnd02: Calendar = Calendar.getInstance(Locale.getDefault())
+    private var currentTime: Date = Date()
+    private var timeRange02: Boolean = false
+
     private var _binding: FragmentMainBinding? = null
     private val mBinding get() = _binding!!
-    private lateinit var mViewModel: MainFragmentViewModel
-    private lateinit var mObserveList: Observer<List<Items>>
+
+    // private var mSelectedItem = Items()
+    private var mString = ""
+
     private lateinit var mToolbar: androidx.appcompat.widget.Toolbar
-    private lateinit var tvName: TextView
+    lateinit var tvName: TextView
     private lateinit var tvTime: TextView
     private lateinit var btnSend: Button
     private lateinit var btnQR: ImageButton
-    private lateinit var itemSaved: Items
     private lateinit var mSnack: Snackbar
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.d(TAG, "onCreate MainFragment")
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,26 +57,14 @@ class MainFragment : androidx.fragment.app.Fragment() {
         _binding = FragmentMainBinding.inflate(layoutInflater, container, false)
         Log.d(TAG, "onCreateView MainFragment")
 
-        tvName = mBinding.mainFragmentTextViewName
-        tvTime = mBinding.mainFragmentTextViewTime
-        btnSend = mBinding.btnSend
-
         setHasOptionsMenu(true)
-
-        tvName.text = arguments?.getString("data") ?: ""
-
-        if (tvName.text.isNotEmpty()) {
-            btnSend.isEnabled = true
-            itemSaved = ITEM
-            btnSend.setOnClickListener{sendData(itemSaved)}
-
-        }
         return mBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(TAG, "onViewCreated MainFragment")
+
         mSnack = Snackbar
             .make(view, "Проверьте наличие интернета", Snackbar.LENGTH_INDEFINITE)
 
@@ -79,37 +78,68 @@ class MainFragment : androidx.fragment.app.Fragment() {
         super.onStart()
         Log.d(TAG, "onStart MainFragment")
         initialise()
-        getMainItem()
+        setCurrentTime()
+        getSelectedItem()
         btnQR.setOnClickListener { initScanner() }
-    }
 
-    override fun onResume() {
-        super.onResume()
-        Log.d(TAG, "onResume MainFragment")
+        tvName.text = arguments?.getString("data") ?: ""
+
+        if (tvName.text.isNotEmpty()) {
+
+            btnSend.isEnabled = true
+
+            val item = ITEM.copy()
+            item.worker08 = tvName.text.toString()
+          //  item.savedToRoom = "true"
+
+            btnSend.setOnClickListener {
+                currentTime = Calendar.getInstance(Locale.getDefault()).time
+                if ((currentTime.after(timeStart02.time)) && (currentTime.before(timeEnd02.time))) {
+                    sendData(item)
+                } else {
+                    showToast("У вас другое время доклада")
+                }
+            }
+        }
     }
 
     override fun onStop() {
         super.onStop()
-        Log.d(TAG, "onStop MainFragment")
     }
 
     private fun initialise() {
+        tvName = mBinding.mainFragmentTextViewName
+        tvTime = mBinding.mainFragmentTextViewTime
         mToolbar = mBinding.mainFragmentToolbar
+        btnSend = mBinding.btnSend
         btnQR = mBinding.btnQR
         APP_ACTIVITY.setSupportActionBar(mToolbar)
     }
 
-    private fun getMainItem() {
-        mObserveList = Observer {
-            for (i in it) {
-                ITEM = i
-                val name = i.objectName
-                mToolbar.title = name
+    private fun setCurrentTime() {
+        timeStart02.set(Calendar.HOUR_OF_DAY, 2)
+        timeStart02.set(Calendar.MINUTE, 20)
+        timeStart02.set(Calendar.SECOND, 0)
+        timeEnd02.set(Calendar.HOUR_OF_DAY, 3)
+        timeEnd02.set(Calendar.MINUTE, 30)
+        timeEnd02.set(Calendar.SECOND, 0)
+    }
+
+    private fun getSelectedItem() {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                ITEM = REPOSITORY_ROOM.getSelectedItem()[0]
+
+                withContext(Dispatchers.Main) {
+                    mToolbar.title = ITEM.objectName
+                   // showToast("${ITEM.state} + ${ITEM.objectName}")
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    e.message?.let { showToast(it) }
+                }
             }
         }
-
-        mViewModel = ViewModelProvider(this).get(MainFragmentViewModel::class.java)
-        mViewModel.selectedItem.observe(this, mObserveList)
     }
 
 
@@ -123,14 +153,12 @@ class MainFragment : androidx.fragment.app.Fragment() {
             R.id.mainFragmentMenuItem -> {
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
-
                         ITEM.state = stateMain
                         REPOSITORY_ROOM.updateMainItem(ITEM)
 
                         withContext(Dispatchers.Main) {
                             APP_ACTIVITY.navController.navigate(R.id.action_mainFragment_to_splashFragment)
                         }
-
                     } catch (e: Exception) {
                         withContext(Dispatchers.Main) {
                             e.message?.let { showToast(it) }
@@ -139,7 +167,6 @@ class MainFragment : androidx.fragment.app.Fragment() {
                 }
             }
             R.id.mainFragmentMenuHistory -> {
-                arguments = null
                 APP_ACTIVITY.navController.navigate(R.id.action_mainFragment_to_historyFragment)
             }
         }
@@ -159,11 +186,9 @@ class MainFragment : androidx.fragment.app.Fragment() {
             if (result.contents == null) {
                 showToast("Отмена")
             } else {
-                ITEM.worker08 = result.contents
-                val mScanResult = result.contents
+                val string = result.contents
                 val bundle = Bundle()
-                bundle.putString("data", mScanResult)
-
+                bundle.putString("data", string)
                 APP_ACTIVITY.navController.navigate(R.id.action_global_mainFragment, bundle)
             }
         } else {
@@ -172,25 +197,24 @@ class MainFragment : androidx.fragment.app.Fragment() {
     }
 
     private fun sendData(item: Items) {
+
         val stringTime = SimpleDateFormat("HH:mm, dd MMM.yyyy", Locale.getDefault())
             .format(Date())
         val id = item.item_id
+        val currentTimeLongType = Calendar.getInstance(Locale.getDefault()).time.time
 
         item.serverTimeStamp = stringTime
-
-        Log.d(
-            TAG, "${item.serverTimeStamp} + ${item.worker08}  + ${item.objectName} " +
-                    "+ ${item.state}"
-        )
+        item.itemLongTime = currentTimeLongType
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 collectionITEMS_REF.document(id)
                     .update(
                         "worker08", item.worker08,
-                        "serverTimeStamp", stringTime
+                        "serverTimeStamp", stringTime,
+                        "itemLongTime", currentTimeLongType
                     ).await()
-
+                item.savedToRoom = "true"
                 REPOSITORY_ROOM.insertItem(item)
 
                 withContext(Dispatchers.Main) {
@@ -209,10 +233,11 @@ class MainFragment : androidx.fragment.app.Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d(TAG, "onDestroyView MainFragment")
         _binding = null
-        mViewModel.selectedItem.removeObserver(mObserveList)
-        mToolbar.title = ""
+        Log.d(TAG, "onDestroyView MainFragment")
     }
 }
+
+
+
 

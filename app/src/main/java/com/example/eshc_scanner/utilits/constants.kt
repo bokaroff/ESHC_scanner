@@ -13,6 +13,8 @@ const val TAG = "ktx"
 const val CAMERA_REQUEST_CODE = 101
 const val getAllMainItems = "SELECT * FROM items_table WHERE state = 'main'"
 const val getAllChangedItems = "SELECT * FROM items_table WHERE state = 'changed'"
+const val getAllSavedToRoomItems = "SELECT * FROM items_table WHERE savedToRoom = 'true'"
+const val getAllItems = "SELECT * FROM items_table"
 
 const val getSelectedItem =
     "SELECT * FROM items_table WHERE state = 'selected'"
@@ -38,6 +40,7 @@ const val getMainItemList21 =
     "SELECT * FROM items_table WHERE order21 = 'true' AND state = 'main' ORDER BY objectName Asc"
 const val stateSelected = "selected"
 const val stateMain = "main"
+const val stateChanged = "changed"
 const val stateSent = "sent"
 const val state = "state"
 

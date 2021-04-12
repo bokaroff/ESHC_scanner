@@ -26,5 +26,4 @@ data class Items(
   var order15: String = "",
   var order21: String = "",
   var state: String = "main",
-  var savedToRoom: String = "false"
 ) : Serializable

@@ -53,24 +53,19 @@ class HistoryFragment : Fragment() {
         mObserveList = Observer {
             val list = it.asReversed()
             val mutableList = list.toMutableList()
-            Log.d(TAG, "savedListSize + ${list.size}")
-
-            for (i in list) {
-                Log.d(TAG, "${i.entity_id} + ${i.objectName}")
-            }
 
             mAdapter.setList(mutableList)
             mRecyclerView.adapter = mAdapter
         }
         mViewModel = ViewModelProvider(this)
             .get(HistoryFragmentViewModel::class.java)
-        mViewModel.allSavedToRoomItems.observe(this, mObserveList)
+        mViewModel.allChangedItems.observe(this, mObserveList)
         mToolbar.setupWithNavController(findNavController())
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mViewModel.allSavedToRoomItems.removeObserver(mObserveList)
+        mViewModel.allChangedItems.removeObserver(mObserveList)
         mRecyclerView.adapter = null
         _binding = null
     }

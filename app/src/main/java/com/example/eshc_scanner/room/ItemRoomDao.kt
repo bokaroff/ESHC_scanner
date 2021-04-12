@@ -10,79 +10,16 @@ import com.example.eshc_scanner.utilits.*
 @Dao
 interface ItemRoomDao {
 
- @Query(getAllMainItems)
- fun getAllItems(): LiveData<List<Items>>
-
- @Query(getAllSavedToRoomItems)
- fun savedToRoomItems(): LiveData<MutableList<Items>>
-
  @Query(getAllChangedItems)
  fun getAllChangedItems(): LiveData<MutableList<Items>>
-
-
 
  @Query(getSelectedItem)
  suspend fun getSelectedItem(): List<Items>
 
- @Query(getAllSavedToRoomItems)
- suspend fun getSavedToRoomItems(): List<Items>
-
- @Query(getAllChangedItemsWhereTimeBetween)
- suspend fun getAllChangedItemsWhereTimeBetween(timeStart: Long, timeEnd: Long): List<Items>
-
-
-
-// @Query(getMainItem)
-// suspend fun getMainItemList(): Items
-
- @Query(getAllItems)
- suspend fun getItems(): List<Items>
-
- @Query(getAllMainItems)
- suspend fun getMainItemList(): List<Items>
-
- @Query(getMainItemList00)
- suspend fun getMainItemList00(): List<Items>
-
- @Query(getMainItemList02)
- suspend fun getMainItemList02(): List<Items>
-
- @Query(getMainItemList04)
- suspend fun getMainItemList04(): List<Items>
-
- @Query(getMainItemList06)
- suspend fun getMainItemList06(): List<Items>
-
- @Query(getMainItemList08)
- suspend fun getMainItemList08(): List<Items>
-
- @Query(getMainItemList15)
- suspend fun getMainItemList15(): List<Items>
-
- @Query(getMainItemList21)
- suspend fun getMainItemList21(): List<Items>
-
-
-
  @Insert(onConflict = OnConflictStrategy.REPLACE)
  suspend fun insertItem(item: Items)
 
-
- @Insert(onConflict = OnConflictStrategy.REPLACE)
- suspend fun insertItemList(list: MutableList<Items>)
-
-
-
- @Query("DELETE FROM items_table WHERE item_id =:item_id and state = 'main' ")
- suspend fun deleteMainItem(item_id: String)
-
- @Query(deleteSelectedItem)
- suspend fun deleteSelectedItem()
-
-
-
  @Update
  suspend fun updateMainItem(item: Items)
-
 }
 

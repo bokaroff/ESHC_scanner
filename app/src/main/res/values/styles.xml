@@ -68,10 +68,10 @@
     <style name="button_blue_save">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_margin">@dimen/margin_10</item>
+        <item name="android:layout_margin">@dimen/margin_main</item>
         <item name="android:background">@drawable/btn_send_selector</item>
+        <item name="android:text">@string/send</item>
         <item name="android:elevation">@dimen/margin_main</item>
-        <item name="android:text">@string/menu_save</item>
         <item name="android:textColor">@color/colorWhite</item>
     </style>
 
@@ -90,6 +90,17 @@
         <item name="android:layout_margin">@dimen/margin_main</item>
         <item name="android:textSize">@dimen/text_size_18</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="textView_time">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/margin_main</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:padding">@dimen/margin_10</item>
+        <item name="android:background">@drawable/text_inactive</item>
         <item name="android:textColor">@color/colorBlack</item>
         <item name="android:gravity">center</item>
     </style>

@@ -31,8 +31,61 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mainFragmentTextViewName" />
 
-    <ImageButton
+    <TextView
+        android:id="@+id/txt00"
+        style="@style/textView_time"
+        android:text="@string/_00_00"
+        app:layout_constraintBottom_toTopOf="@+id/txt02"
+        app:layout_constraintStart_toStartOf="parent"
 
+        />
+
+    <TextView
+        android:id="@+id/txt02"
+        style="@style/textView_time"
+        android:text="@string/_02_00"
+        app:layout_constraintBottom_toTopOf="@+id/txt04"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/txt04"
+        style="@style/textView_time"
+        android:text="@string/_04_00"
+        app:layout_constraintBottom_toTopOf="@+id/txt06"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txt06"
+        style="@style/textView_time"
+        android:text="@string/_06_00"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt08"
+        style="@style/textView_time"
+        android:text="@string/_08_00"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt06" />
+
+    <TextView
+        android:id="@+id/txt15"
+        style="@style/textView_time"
+        android:text="@string/_15_00"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt08" />
+
+    <TextView
+        android:id="@+id/txt21"
+        style="@style/textView_time"
+        android:text="@string/_21_00"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt15" />
+
+
+    <ImageButton
         android:id="@+id/btnQR"
         style="@style/button_QR"
         android:layout_width="150dp"
@@ -42,13 +95,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
     <Button
         android:id="@+id/btnSend"
         style="@style/button_blue_save"
         android:enabled="false"
-        android:text="@string/send"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

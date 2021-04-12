@@ -17,9 +17,7 @@ class AdapterItems() : RecyclerView.Adapter<AdapterItems.SimpleViewHolder>() {
     private lateinit var mContext: Context
     private var mList = mutableListOf<Items>()
 
-
     override fun onViewAttachedToWindow(holder: SimpleViewHolder) {
-
         holder.rvItemContainer.setOnClickListener {
             val item = mList[holder.adapterPosition]
             SplashFragment.companionClick(item)
@@ -68,13 +66,6 @@ class AdapterItems() : RecyclerView.Adapter<AdapterItems.SimpleViewHolder>() {
 
     fun setList(list: MutableList<Items>) {
         mList = list
-        // Log.d(TAG, "AdaptermainItemList08:  ${mList.size}")
         notifyDataSetChanged()
-    }
-
-    fun removeItem(position: Int, item: Items, mutableList: MutableList<Items>) {
-        mList.remove(item)
-        notifyItemRemoved(position)
-        notifyItemRangeChanged(position, mutableList.size)
     }
 }

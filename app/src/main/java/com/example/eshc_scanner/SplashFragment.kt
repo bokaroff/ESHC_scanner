@@ -37,7 +37,6 @@ class SplashFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         _binding = FragmentSplashBinding.inflate(layoutInflater, container, false)
         return mBinding.root
     }
@@ -46,7 +45,6 @@ class SplashFragment : Fragment() {
         super.onStart()
         initialise()
         getData()
-        Log.d(TAG, "start: $javaClass")
     }
 
     private fun initialise() {
@@ -62,11 +60,6 @@ class SplashFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val selectedItemList = REPOSITORY_ROOM.getSelectedItem()
-                Log.d(TAG, "if already item exist: + ${selectedItemList.size} ")
-
-                for (i in selectedItemList){
-                    Log.d(TAG, "${i.entity_id} + ${i.objectName}")
-                }
 
                 if (selectedItemList.isNotEmpty()) {
 
@@ -74,7 +67,6 @@ class SplashFragment : Fragment() {
                         APP_ACTIVITY.navController.navigate(R.id.action_global_mainFragment)
                     }
                 } else {
-                    Log.d(TAG, " item doesnt exist: + ${selectedItemList.size} ")
                     val querySnapshot = collectionITEMS_REF
                         .orderBy("objectName", Query.Direction.ASCENDING)
                         .get().await()
@@ -110,16 +102,10 @@ class SplashFragment : Fragment() {
 
                     CoroutineScope(Dispatchers.IO).launch {
                         try {
-                            Log.d(TAG, "Splash: + ${item.entity_id} + ${item.state}")
                             item.state = stateSelected
 
                             REPOSITORY_ROOM.insertItem(item)
 
-                            Log.d(
-                                TAG,
-                                "first time select item: - ${item.entity_id} +state- ${item.state} + name-${item.objectName} + " +
-                                        "kurator-${item.kurator} + phone-${item.objectPhone}"
-                            )
                             withContext(Dispatchers.Main) {
                                 APP_ACTIVITY.navController.navigate(
                                     R.id.action_splashFragment_to_mainFragment

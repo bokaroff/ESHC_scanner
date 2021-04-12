@@ -17,24 +17,6 @@ class AdapterItemsSimple() : RecyclerView.Adapter<AdapterItemsSimple.SimpleViewH
     private lateinit var mContext: Context
     private var mList = mutableListOf<Items>()
 
-/*
-    override fun onViewAttachedToWindow(holder: AdapterItems.SimpleViewHolder) {
-
-        holder.rvItemContainer.setOnClickListener {
-            val item = mList[holder.adapterPosition]
-            SplashFragment.companionClick(item)
-        }
-    }
-
-
-
-    override fun onViewDetachedFromWindow(holder: SimpleViewHolder) {
-       // holder.rvItemContainer.setOnClickListener(null)
-        super.onViewDetachedFromWindow(holder)
-    }
-
- */
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SimpleViewHolder {
         val view = SimpleViewHolder(
             RvItemMiniBinding.inflate(
@@ -72,13 +54,6 @@ class AdapterItemsSimple() : RecyclerView.Adapter<AdapterItemsSimple.SimpleViewH
 
     fun setList(list: MutableList<Items>) {
         mList = list
-        // Log.d(TAG, "AdaptermainItemList08:  ${mList.size}")
         notifyDataSetChanged()
-    }
-
-    fun removeItem(position: Int, item: Items, mutableList: MutableList<Items>) {
-        mList.remove(item)
-        notifyItemRemoved(position)
-        notifyItemRangeChanged(position, mutableList.size)
     }
 }

@@ -59,7 +59,7 @@ class HistoryFragment : Fragment() {
         }
         mViewModel = ViewModelProvider(this)
             .get(HistoryFragmentViewModel::class.java)
-        mViewModel.allChangedItems.observe(this, mObserveList)
+        mViewModel.allChangedItems.observe(viewLifecycleOwner, mObserveList)
         mToolbar.setupWithNavController(findNavController())
     }
 
